@@ -11,7 +11,7 @@ export default class Task extends Component {
                     <input className="toggle" type="checkbox"/>
                     <label>
                         <span className="description">Таск из компонента</span>
-                        <span className="created">created 500 minutes ago</span>
+                        <span className="created">created 1.37 minutes ago</span>
                     </label>
                     <button className="icon icon-edit"></button>
                     <button className="icon icon-destroy"></button>
