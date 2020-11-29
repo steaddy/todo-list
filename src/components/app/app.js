@@ -8,15 +8,26 @@ export default class App extends Component {
     constructor() {
         super();
 
-        this.makeNewTask = (title, id, state) => {
+        this.makeNewTask = (title, id, state = 'active') => {
             return {title: title, state: state, id: id};
         }
 
         this.state = {tasks: [
             this.makeNewTask('First Task', 4, 'editing'),
-            this.makeNewTask('Second Task', 99, 'active'),
+            this.makeNewTask('Second Task', 99),
             this.makeNewTask('Third Task', 32, 'completed')
         ]};
+
+        this.toggleCompleted = (id) => {
+            this.setState( ({ tasks }) => {
+                let newTasks = [...tasks];
+                return newTasks.map(el => {
+                    if(el.id === id) {
+                        el.state === 'active' ? el.state = 'completed' : el.state = 'active';
+                    }
+                });
+            })
+        }
 
     }
 
@@ -28,7 +39,10 @@ export default class App extends Component {
                     <NewTaskForm/>
                 </header>
                 <section className="main">
-                    <TaskList tasks={ this.state.tasks }/>
+                    <TaskList
+                        tasks={ this.state.tasks }
+                        toggleCompleted={ this.toggleCompleted }
+                    />
                     <Footer/>
                 </section>
             </section>
