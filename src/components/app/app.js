@@ -8,15 +8,26 @@ export default class App extends Component {
     constructor() {
         super();
 
-        this.makeNewTask = (title, id, state = 'active') => {
+        this.generateKey = (pre) => {
+            return `${ pre }_${ new Date().getTime() }`;
+        }
+
+        this.makeNewTask = (title, state, id) => {
             return {title: title, state: state, id: id};
         }
 
+        this.addNewTask = (title) => {
+            this.setState(( { tasks } ) => {
+                return { tasks: [...tasks, this.makeNewTask(title, 'active', this.generateKey())] };
+            })
+        }
+
         this.state = {tasks: [
-            this.makeNewTask('First Task', 4, 'editing'),
-            this.makeNewTask('Second Task', 99),
-            this.makeNewTask('Third Task', 32, 'completed')
+            this.makeNewTask('First Task', 'editing', 44),
+            this.makeNewTask('Second Task', 'active', 33),
+            this.makeNewTask('Third Task', 'completed',22)
         ]};
+
 
         this.toggleCompleted = (id) => {
             this.setState( ({ tasks }) => {
@@ -34,9 +45,19 @@ export default class App extends Component {
                 let newTasks = [...tasks];
                 return newTasks.map(el => {
                     if(el.id === id) {
-                        console.log(el.state);
                         el.state = 'editing';
-                        console.log(el.state);
+                    }
+                });
+            })
+        }
+
+        this.onEditEnter = (val, id) => {
+            this.setState( ({ tasks }) => {
+                let newTasks = [...tasks];
+                return newTasks.map(el => {
+                    if(el.id === id) {
+                        el.state = 'active';
+                        el.title = val;
                     }
                 });
             })
@@ -51,11 +72,12 @@ export default class App extends Component {
     }
 
     render() {
+        let tasksRemain = this.state.tasks.filter(el => el.state === 'active').length;
         return (
             <section className="todoapp">
                 <header className="header">
                     <h1>My Todos</h1>
-                    <NewTaskForm/>
+                    <NewTaskForm addNewTask = { this.addNewTask }/>
                 </header>
                 <section className="main">
                     <TaskList
@@ -63,8 +85,9 @@ export default class App extends Component {
                         toggleCompleted={ this.toggleCompleted }
                         onDelete = { this.onDelete }
                         onEdit = { this.onEdit }
+                        onEditEnter = { this.onEditEnter }
                     />
-                    <Footer/>
+                    <Footer tasksRemain = { tasksRemain }/>
                 </section>
             </section>
         );
