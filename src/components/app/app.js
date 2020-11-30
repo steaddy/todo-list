@@ -29,6 +29,25 @@ export default class App extends Component {
             })
         }
 
+        this.onEdit = (id) => {
+            this.setState( ({ tasks }) => {
+                let newTasks = [...tasks];
+                return newTasks.map(el => {
+                    if(el.id === id) {
+                        console.log(el.state);
+                        el.state = 'editing';
+                        console.log(el.state);
+                    }
+                });
+            })
+        }
+
+        this.onDelete = (id) => {
+            this.setState( ({ tasks }) => {
+                return { tasks: tasks.filter(el => el.id !== id) };
+            })
+        }
+
     }
 
     render() {
@@ -42,6 +61,8 @@ export default class App extends Component {
                     <TaskList
                         tasks={ this.state.tasks }
                         toggleCompleted={ this.toggleCompleted }
+                        onDelete = { this.onDelete }
+                        onEdit = { this.onEdit }
                     />
                     <Footer/>
                 </section>

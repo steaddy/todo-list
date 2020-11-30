@@ -9,17 +9,19 @@ export default class TaskList extends Component {
     }
 
     render() {
-        let { toggleCompleted } = this.props;
-
-        let { tasks/*, onDelete, onToggleImportant, onToggleDone*/ } = this.props;
+        let { tasks, toggleCompleted, onDelete, onEdit } = this.props;
         let tasksArr = tasks.map(({ title, id, state, }) => {
+            let editForm = state === 'editing' ? 'block' : 'none';
             return  <li key={ id } className={ state }>
                 <Task title={ title }
+                      state = { state }
                       toggleCompleted={ ()=> toggleCompleted(id) }
-                      /*onDelete = { () => onDelete(id) }
-                      onToggleImportant={ () => onToggleImportant(id) }
+                      onDelete = { () => onDelete(id) }
+                      onEdit = { () => onEdit(id) }
+                    /*onToggleImportant={ () => onToggleImportant(id) }
                       onToggleDone={ () => onToggleDone(id) }*/
                 />
+                <input type="text" class="edit" value="Editing task" display={ editForm }/>
             </li>;
         })
 
