@@ -5,8 +5,8 @@ import Footer from '../footer';
 import './app.css';
 
 export default class App extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.generateKey = (pre) => {
             return `${ pre }_${ new Date().getTime() }`;
@@ -23,10 +23,12 @@ export default class App extends Component {
         }
 
         this.state = {tasks: [
-            this.makeNewTask('First Task', 'editing', 44),
+            this.makeNewTask('First Task', 'active', 44),
             this.makeNewTask('Second Task', 'active', 33),
             this.makeNewTask('Third Task', 'completed',22)
-        ]};
+        ],
+        filter: 'completed'
+        };
 
 
         this.toggleCompleted = (id) => {
@@ -69,10 +71,26 @@ export default class App extends Component {
             })
         }
 
+        this.onFilterChange = filter => this.setState({filter: filter});
+
+        this.filter = (items, filter) => {
+          switch(filter) {
+              case 'all':
+                  return items;
+              case 'active':
+                  return items.filter(el => el.state === "active");
+              case 'completed':
+                  return items.filter(el => el.state === "completed");
+              default:
+                  return items;
+          }
+        };
     }
 
     render() {
+        const { tasks, filter } = this.state;
         let tasksRemain = this.state.tasks.filter(el => el.state === 'active').length;
+        const visibleTasks = this.filter(tasks, filter);
         return (
             <section className="todoapp">
                 <header className="header">
@@ -81,13 +99,17 @@ export default class App extends Component {
                 </header>
                 <section className="main">
                     <TaskList
-                        tasks={ this.state.tasks }
+                        tasks={ visibleTasks }
                         toggleCompleted={ this.toggleCompleted }
                         onDelete = { this.onDelete }
                         onEdit = { this.onEdit }
                         onEditEnter = { this.onEditEnter }
                     />
-                    <Footer tasksRemain = { tasksRemain }/>
+                    <Footer
+                        tasksRemain = { tasksRemain }
+                            filter={filter}
+                        onFilterChange={this.onFilterChange}
+                    />
                 </section>
             </section>
         );

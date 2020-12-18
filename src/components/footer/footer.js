@@ -5,11 +5,11 @@ import './footer.css';
 export default class Footer extends Component {
 
     render() {
-        let { tasksRemain } = this.props;
+        let { tasksRemain, filter, onFilterChange } = this.props;
         return (
             <footer className="footer">
                 <span className="todo-count">{ tasksRemain } items left</span>
-                <TasksFilter/>
+                <TasksFilter filter={filter} onFilterChange={onFilterChange}/>
                 <button className="clear-completed">Clear completed</button>
             </footer>
         );
