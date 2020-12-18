@@ -25,11 +25,16 @@ export default class App extends Component {
         this.state = {tasks: [
             this.makeNewTask('First Task', 'active', 44),
             this.makeNewTask('Second Task', 'active', 33),
-            this.makeNewTask('Third Task', 'completed',22)
+            this.makeNewTask('Third Task', 'active',22)
         ],
-        filter: 'completed'
+        filter: 'all'
         };
 
+        this.onClearCompleted = () => {
+            this.setState(({tasks}) => {
+                return {tasks: tasks.filter(el => el.state !== "completed")};
+            });
+        };
 
         this.toggleCompleted = (id) => {
             this.setState( ({ tasks }) => {
@@ -109,6 +114,7 @@ export default class App extends Component {
                         tasksRemain = { tasksRemain }
                             filter={filter}
                         onFilterChange={this.onFilterChange}
+                        onClearCompleted={this.onClearCompleted}
                     />
                 </section>
             </section>
