@@ -13,7 +13,7 @@ export default class App extends Component {
         }
 
         this.makeNewTask = (title, state, id) => {
-            return {title: title, state: state, id: id};
+            return {title: title, state: state, id: id, timeOfCreation: Date.now()};
         }
 
         this.addNewTask = (title) => {
@@ -47,12 +47,13 @@ export default class App extends Component {
             })
         }
 
-        this.onEdit = (id) => {
+        this.onEdit = (id, currentValue) => {
             this.setState( ({ tasks }) => {
                 let newTasks = [...tasks];
                 return newTasks.map(el => {
                     if(el.id === id) {
                         el.state = 'editing';
+                        el.title = currentValue;
                     }
                 });
             })
@@ -90,6 +91,19 @@ export default class App extends Component {
                   return items;
           }
         };
+
+        this.intervalID = setInterval(() => this.setState({}), 2000);
+    }
+
+    componentDidMount() {
+        if(!localStorage.getItem('taskList')){
+            localStorage.setItem('taskList', JSON.stringify(this.state.tasks))
+        } else {
+        this.setState({tasks: (JSON.parse(localStorage.getItem('taskList')))})
+        }
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        localStorage.setItem('taskList', JSON.stringify(this.state.tasks));
     }
 
     render() {

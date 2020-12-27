@@ -6,7 +6,7 @@ export default class NewTaskForm extends Component {
     render() {
         let { addNewTask } = this.props;
         return (
-            <input className="new-todo" placeholder="What needs to be done first?" autoFocus
+            <input className="new-todo" placeholder="What needs to be done first?"
             onKeyDown={ (e) => {
                 if(e.key === 'Enter') {
                     addNewTask(e.target.value);
