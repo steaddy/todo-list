@@ -5,7 +5,7 @@ import './footer.css';
 export default class Footer extends Component {
 
     render() {
-        let {tasksRemain, filter, onFilterChange, onClearCompleted} = this.props;
+        const {tasksRemain, filter, onFilterChange, onClearCompleted} = this.props;
         return (
             <footer className="footer">
                 <span className="todo-count">{tasksRemain} items left</span>

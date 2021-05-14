@@ -18,6 +18,7 @@ export default class TasksFilter extends Component {
             return (
                 <li key={name}>
                     <button
+                        type="button"
                         className={clazz}
                         onClick={() => onFilterChange(name)}
                     >{label}</button>

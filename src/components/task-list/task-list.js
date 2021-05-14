@@ -1,20 +1,46 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import Task from '../task'
 import './task-list.css';
 
+// eslint-disable-next-line react/prefer-stateless-function
 export default class TaskList extends Component {
-    static defaultProps = {tasks: []};
+
+    static defaultProps = {
+        tasks: [],
+        toggleCompleted: () => {},
+        onDelete: () => {},
+        onEdit: () => {},
+        onEditEnter: () => {},
+        startTimer: () => {},
+        getSpentTime: () => {},
+        setSpentTime: () => {},
+    };
+
+    static propTypes = {
+        tasks: PropTypes.arrayOf(PropTypes.object),
+        toggleCompleted: PropTypes.func,
+        onDelete: PropTypes.func,
+        onEdit: PropTypes.func,
+        onEditEnter: PropTypes.func,
+        startTimer: PropTypes.func,
+        getSpentTime: PropTypes.func,
+        setSpentTime: PropTypes.func,
+    };
 
     render() {
-        let {
+        const {
             tasks,
             toggleCompleted,
             onDelete,
             onEdit,
-            onEditEnter
+            onEditEnter,
+            startTimer,
+            setSpentTime,
+            getSpentTime
         } = this.props;
-        let tasksArr = tasks.map(({ title, id, state, timeOfCreation }) => {
-            let editForm = state === 'editing' ? 'block' : 'none';
+        const tasksArr = tasks.map(({ title, id, state, timeOfCreation, timeSpent }) => {
+            const editForm = state === 'editing' ? 'block' : 'none';
             return  <li key={ id } className={ state }>
                 <Task title={ title }
                       state = { state }
@@ -22,6 +48,10 @@ export default class TaskList extends Component {
                       onDelete = { () => onDelete(id) }
                       onEdit = { () => onEdit(id, title) }
                       timeOfCreation = { timeOfCreation }
+                      timeSpent = { timeSpent }
+                      startTimer = { () => startTimer(id) }
+                      getSpentTime = { () => getSpentTime(id) }
+                      setSpentTime = { (currentTime) => setSpentTime(id, currentTime) }
                 />
                 <input type="text" className="edit" placeholder="Edit task"
                        display={ editForm }
@@ -35,7 +65,7 @@ export default class TaskList extends Component {
             </li>;
         });
 
-        if(!tasksArr.length) tasksArr.push((() => <li key='empty' style={{paddingLeft: '60px', lineHeight: '58px', height: '58px', fontSize: '24px', color: 'grey'}}>There is no tasks here</li>)());
+        if(!tasksArr.length) tasksArr.push((() => <li key='empty' style={{paddingLeft: '60px', lineHeight: '58px', height: '58px', fontSize: '24px', color: 'grey'}}>There are no tasks here</li>)());
 
 
         return (
