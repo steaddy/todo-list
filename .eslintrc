@@ -3,7 +3,8 @@
     "airbnb",
     "airbnb/hooks",
     "eslint-config-prettier",
-    "prettier/react"
+    "prettier/react",
+    'plugin:react/recommended'
   ],
   "plugins": ["react"],
   "parser": "babel-eslint",
