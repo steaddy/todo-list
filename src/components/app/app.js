@@ -1,4 +1,4 @@
-import React, {  useState, useEffect } from 'react';
+import {  useState, useEffect } from 'react';
 import TaskList from '../task-list';
 import NewTaskForm from '../new-task-form';
 import Footer from '../footer';

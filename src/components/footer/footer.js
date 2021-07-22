@@ -1,4 +1,3 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import TasksFilter from '../tasks-filter';
 import './footer.css';

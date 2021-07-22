@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {formatDistanceToNow, differenceInSeconds} from 'date-fns';
 import PropTypes from 'prop-types';
 import './task.css';
