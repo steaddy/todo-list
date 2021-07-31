@@ -78,19 +78,19 @@ const Task = props => {
                 />
                 <label>
                     <span className="title">{title}</span>
-                    <span className="description">
+                    <span className="description">df
                   <button
                       type="button"
                       aria-label="Play"
                       className="icon icon-play"
                       onClick={startTimer}
-                  >_</button>
+                  >Go</button>
                   <button
                       type="button"
                       aria-label="Pause"
                       className="icon icon-pause"
                       onClick={stopTimer}
-                  >_</button>
+                  >Stop</button>
                         { timeFormat(currentTime) }
                 </span>
                     <span className="description">{timeOfCreationPrivate}</span>
