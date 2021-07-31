@@ -78,7 +78,7 @@ const Task = props => {
                 />
                 <label>
                     <span className="title">{title}</span>
-                    <span className="description">df
+                    <span className="description">
                   <button
                       type="button"
                       aria-label="Play"
@@ -90,7 +90,7 @@ const Task = props => {
                       aria-label="Pause"
                       className="icon icon-pause"
                       onClick={stopTimer}
-                  > </button>
+                  />
                         { timeFormat(currentTime) }
                 </span>
                     <span className="description">{timeOfCreationPrivate}</span>
