@@ -16,8 +16,6 @@ const Task = props => {
 
     const startTimer = () => {
         const { getSpentTime } = props;
-        console.log(getSpentTime());
-        console.log(canStartNewTimer);
 
         if(!canStartNewTimer) return;
         const start = Date.now();
@@ -53,21 +51,22 @@ const Task = props => {
 
 
 
-
     useEffect( () => {
+      const intervalID = startTimer();
+       /* const intervalID = setInterval(()=> {
 
-             startTimer();
+      }, 1000); */
+      return ()=> {
+        clearInterval(intervalID);
+      };
            // return () => {clearTimeout(interval)}
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    useEffect(() => ()=>{
-            clearTimeout(timerID);
-        });
 
 
 
-    
+
         const {toggleCompleted, state, onDelete, onEdit, timeOfCreation, title} = props;
         const timeOfCreationPrivate = formatDistanceToNow(timeOfCreation, {includeSeconds: true});
 
@@ -85,13 +84,13 @@ const Task = props => {
                       aria-label="Play"
                       className="icon icon-play"
                       onClick={startTimer}
-                  />
+                  > </button>
                   <button
                       type="button"
                       aria-label="Pause"
                       className="icon icon-pause"
                       onClick={stopTimer}
-                  />
+                  > </button>
                         { timeFormat(currentTime) }
                 </span>
                     <span className="description">{timeOfCreationPrivate}</span>
